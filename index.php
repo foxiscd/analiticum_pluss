@@ -30,20 +30,21 @@ require __DIR__ . '/functions.php';
         <button class="sendComment">Отправить</button>
         <br><br>
         <script type="text/javascript">
-            $(document).ready(function () {
-                $('button.sendComment').on('click', function () {
-                    var comment = $('textarea.comment').val();
-                    $.ajax({
-                        method: "POST",
-                        url: "commentCreator.php",
-                        data: {comment: comment},
-                        success: function (html) {
-                            $("div#content").html(html);
-                        },
+                $(document).ready(function () {
+                    $('button.sendComment').on('click', function () {
+                        var comment = $('textarea.comment').val();
+                        $.ajax({
+                            method: "POST",
+                            url: "commentCreator.php",
+                            data: {comment: comment},
+                            success: function (html) {
+                                $("div#content").html(html);
+                                rekursion();
+                            },
+                        })
+                        $('textarea.comment').val('');
                     })
-                    $('textarea.comment').val('');
                 })
-            })
         </script>
     </div>
     <div id="content">
@@ -77,7 +78,7 @@ require __DIR__ . '/functions.php';
 </body>
 <!-- Создаем скрипт -->
 <script type="text/javascript">
-    function rekursy() {
+    function rekursion() {
         $(document).ready(function () {
             $('div#closed').hide();
             $('div button.answer').on('click', function () {
@@ -96,12 +97,12 @@ require __DIR__ . '/functions.php';
                     data: {comment: text, parent_id: id},
                     success: function (html) {
                         $("div#content").html(html);
-                        rekursy();
+                        rekursion();
                     }
                 })
             })
         });
     }
-    rekursy();
+    rekursion();
 </script>
 </html>
